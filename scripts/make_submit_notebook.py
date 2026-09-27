@@ -48,6 +48,7 @@ def main() -> None:
         for name, data in sorted(files.items()):
             info = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED
+            info.create_system = 0  # Preserve historical Windows ZIP metadata on every host.
             info.external_attr = 0o644 << 16
             z.writestr(info, data)
     payload = buffer.getvalue()

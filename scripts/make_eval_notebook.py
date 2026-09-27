@@ -38,6 +38,7 @@ def bundle(src: Path) -> tuple[str, str]:
                 raise SystemExit(f"non-text file {p}; adapters must ship via a dataset, not the notebook")
             info = zipfile.ZipInfo(p.relative_to(src).as_posix(), date_time=(1980, 1, 1, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED
+            info.create_system = 0  # Preserve historical Windows ZIP metadata on every host.
             info.external_attr = 0o644 << 16
             z.writestr(info, p.read_bytes())
     data = buf.getvalue()

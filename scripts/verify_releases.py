@@ -23,6 +23,7 @@ def archive_bytes(root):
                 raise ValueError(f'Unexpected file type: {p.suffix}')
             entry = zipfile.ZipInfo(p.relative_to(root).as_posix(), (1980, 1, 1, 0, 0, 0))
             entry.compress_type = zipfile.ZIP_DEFLATED
+            entry.create_system = 0  # Preserve historical Windows ZIP metadata on every host.
             entry.external_attr = 0o644 << 16
             z.writestr(entry, p.read_bytes())
     return buffer.getvalue()
