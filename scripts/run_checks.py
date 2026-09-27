@@ -13,6 +13,7 @@ def run(args, env=None):
 
 
 def main():
+    run(['scripts/check_public_repo.py'])
     run(['scripts/verify_releases.py'])
     run(['-m','unittest','discover','-s','tests','-v'])
     for enabled in ('0','1'):

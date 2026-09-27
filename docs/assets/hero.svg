@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-labelledby="title desc">
+<title id="title">Gemma 4 Agent Lab</title><desc id="desc">From a valid patch to a verified result. An independent coding agent research journal. Release, evaluate, inspect, improve.</desc>
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#102a31"/><stop offset="1" stop-color="#142036"/></linearGradient><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity=".04"/></pattern></defs>
+<rect width="1200" height="380" rx="24" fill="url(#bg)"/><rect width="1200" height="380" rx="24" fill="url(#grid)"/>
+<g font-family="Segoe UI,Arial,sans-serif"><rect x="48" y="38" width="207" height="30" rx="15" fill="#204a4c"/><circle cx="66" cy="53" r="4" fill="#77e1bd"/><text x="80" y="58" fill="#b2f4df" font-size="11" letter-spacing="2">RESEARCH IN PROGRESS</text>
+<text x="48" y="126" fill="#ffffff" font-weight="700" font-size="49" letter-spacing="-2">Gemma 4 Agent Lab</text>
+<text x="50" y="177" fill="#b5c9d4" font-size="23">From a valid patch to a verified result.</text>
+<text x="50" y="211" fill="#839eae" font-size="15">Frozen artifacts. Controlled experiments. Honest measurements.</text>
+<path d="M50 249H728" stroke="#34515e"/>
+<g font-size="12" letter-spacing="1"><text x="50" y="291" fill="#8dddc6">01  RELEASE</text><text x="225" y="291" fill="#8dddc6">02  EVALUATE</text><text x="412" y="291" fill="#8dddc6">03  INSPECT</text><text x="587" y="291" fill="#8dddc6">04  IMPROVE</text></g>
+<text x="50" y="338" fill="#718d9e" font-size="12">INDEPENDENT COMPETITION PROJECT / 2026</text>
+<g transform="translate(810 66)"><rect width="337" height="249" rx="18" fill="#172f3b" stroke="#3c5566"/><circle cx="24" cy="24" r="4" fill="#e8a85e"/><circle cx="40" cy="24" r="4" fill="#6abfb1"/><circle cx="56" cy="24" r="4" fill="#7795be"/><text x="24" y="66" font-size="11" fill="#90aaba" letter-spacing="2">MEASURED PUBLIC SCORE</text><text x="22" y="135" fill="#ecfaf6" font-size="66" font-weight="700">0.06</text><text x="27" y="163" fill="#a6bec9" font-size="13">v1 and v2 · submitted</text><path d="M24 184H312" stroke="#35515d"/><circle cx="29" cy="214" r="4" fill="#e8a85e"/><text x="42" y="219" fill="#e8c497" font-size="13">Pilot A/B: unmeasured</text></g></g></svg>

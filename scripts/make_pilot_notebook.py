@@ -104,7 +104,7 @@ usable evidence. **It cannot establish which candidate is better** — two tasks
 '''
 
 CFG = r'''# ============================ CONFIG ============================
-DISPATCH_CONFIRM = True      # guards model startup/dispatch; a Kaggle GPU session still consumes quota during setup
+DISPATCH_CONFIRM = False     # guards model startup/dispatch; a Kaggle GPU session still consumes quota during setup
 SESSION_CAP_MIN  = 150       # admission deadline; not a hard OS-process/session kill
 RUN_RESERVE_MIN = 25         # refuse a new run when less than this planning allowance remains
 
