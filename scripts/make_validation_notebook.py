@@ -19,10 +19,11 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import os
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "notebooks" / "validate"
-KERNEL_ID = "navin03/gemma4-swe-agent-validate"
+KERNEL_ID = os.environ.get("KAGGLE_KERNEL_OWNER", "YOUR_KAGGLE_USERNAME") + "/gemma4-swe-agent-validate"
 
 # The 14 paired candidates from the eval notebook, plus the smoke task that exposed the problem.
 DEFAULT_TASKS = [

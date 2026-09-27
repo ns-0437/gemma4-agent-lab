@@ -25,10 +25,11 @@ import io
 import json
 import zipfile
 from pathlib import Path
+import os
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "notebooks" / "pilot"
-KERNEL_ID = "navin03/gemma4-swe-agent-pilot"
+KERNEL_ID = os.environ.get("KAGGLE_KERNEL_OWNER", "YOUR_KAGGLE_USERNAME") + "/gemma4-swe-agent-pilot"
 TEXT_EXT = {".yaml", ".yml", ".md", ".txt", ".py", ".json"}
 CANDIDATES = {"A": ROOT / "releases" / "pilot_A", "B": ROOT / "releases" / "pilot_B"}
 PILOT_TASKS = ["requests_7309", "rich_3471"]

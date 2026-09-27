@@ -23,10 +23,11 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import os
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "notebooks" / "provenance"
-KERNEL_ID = "navin03/gemma4-swe-agent-provenance"
+KERNEL_ID = os.environ.get("KAGGLE_KERNEL_OWNER", "YOUR_KAGGLE_USERNAME") + "/gemma4-swe-agent-provenance"
 TASKS = ["requests_7309", "rich_3471"]
 
 MD = """# Provenance check — CPU only, two tasks

@@ -18,11 +18,12 @@ import io
 import zipfile
 import json
 from pathlib import Path
+import os
 
 ROOT = Path(__file__).resolve().parent.parent
 SUB = ROOT / "submission"
 OUT = ROOT / "notebooks" / "submit"
-KERNEL_ID = "navin03/gemma4-swe-agent-submit"
+KERNEL_ID = os.environ.get("KAGGLE_KERNEL_OWNER", "YOUR_KAGGLE_USERNAME") + "/gemma4-swe-agent-submit"
 TEXT_EXT = {".yaml", ".yml", ".md", ".txt", ".py", ".json"}
 
 

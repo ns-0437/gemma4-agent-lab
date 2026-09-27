@@ -101,6 +101,7 @@ def main() -> int:
         print("effective model args, i.e. it is not forwarded to the inference server. Only")
         print("extra_body.chat_template_kwargs.enable_thinking (and reasoning_effort, unset here) is.")
         print("Treat the numeric budget as UNVERIFIED until observed in an outgoing request.")
+    Path("reference").mkdir(exist_ok=True)
     Path("reference/effective_settings.json").write_text(json.dumps(reports, indent=2), encoding="utf-8")
     print("\nsaved reference/effective_settings.json")
     return 0
