@@ -196,6 +196,7 @@ def main() -> int:
             for p in sorted(files, key=lambda f: f.relative_to(root).as_posix()):
                 info = zipfile.ZipInfo(p.relative_to(root).as_posix(), date_time=(1980, 1, 1, 0, 0, 0))
                 info.compress_type = zipfile.ZIP_DEFLATED
+                info.create_system = 0  # Preserve historical Windows ZIP metadata on every host.
                 info.external_attr = 0o644 << 16
                 z.writestr(info, p.read_bytes())
         print(f"wrote {a.out}")

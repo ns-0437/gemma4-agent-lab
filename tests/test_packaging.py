@@ -26,6 +26,7 @@ class PackagingTests(unittest.TestCase):
         with zipfile.ZipFile(io.BytesIO(payload)) as z:
             self.assertEqual(z.namelist(), sorted(z.namelist()))
             self.assertTrue(all(i.date_time == (1980,1,1,0,0,0) for i in z.infolist()))
+            self.assertTrue(all(i.create_system == 0 for i in z.infolist()))
             self.assertIsNone(z.testzip())
 
     def test_candidate_delta_is_only_thinking(self):

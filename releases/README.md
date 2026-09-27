@@ -12,3 +12,7 @@ The v1 upload predates deterministic ZIP metadata. Its original uploaded archive
 separately as submitted_archive_sha256. The rebuilt v1 ZIP has a different hash; every source
 entry was compared byte-for-byte against the historical ZIP before publication. Other releases
 already used normalized ZIP metadata. This distinction is intentional, not a refrozen candidate.
+
+Archive builders pin the ZIP creator-system field to Windows (0), matching the original artifacts
+on Linux and Windows. Fixed timestamps alone did not pin this platform-dependent metadata byte;
+the Linux CI matrix caught it. Source file contents are unchanged.
