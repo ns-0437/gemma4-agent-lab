@@ -1,0 +1,6 @@
+* text=auto eol=lf
+# Frozen source bytes determine historical archive SHA-256 values.
+releases/** -text
+submission/** -text
+*.png binary
+*.jpg binary
