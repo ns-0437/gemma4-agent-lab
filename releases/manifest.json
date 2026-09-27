@@ -5,9 +5,11 @@
     {
       "id": "v1",
       "directory": "releases/v1",
-      "sha256": "1e265aab08f5671f7e4a4f4ce42f4a3d3c274205d84fb2b235d53fd8fd42fd1d",
+      "sha256": "dddbe4b08d837cbc318100d009638f107866921ea20e5b63d722ad9206aa5f46",
       "public_score": 0.06,
-      "status": "submitted"
+      "status": "submitted",
+      "submitted_archive_sha256": "1e265aab08f5671f7e4a4f4ce42f4a3d3c274205d84fb2b235d53fd8fd42fd1d",
+      "note": "Original v1 ZIP used non-normalized metadata. Source entry bytes verified identical; sha256 is the reproducible rebuild, submitted_archive_sha256 is the historical upload."
     },
     {
       "id": "v2",
