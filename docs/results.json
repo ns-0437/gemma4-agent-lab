@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-09-27",
+  "evidence_note": "Scores were observed in the owner's Kaggle submissions screenshot. No hidden per-task outcomes are available. Local assertions are not solve rates.",
+  "releases": [
+    {"id": "v1", "status": "submitted", "public_score": 0.06, "label": "Coder + analyzer", "hypothesis": "Structured repair workflow", "outcome": "Valid submission; public score 0.06."},
+    {"id": "v2", "status": "submitted", "public_score": 0.06, "label": "Search first, optional analyzer", "hypothesis": "Bound investigation and preserve test exit codes", "outcome": "Same aggregate score; solved-task overlap is unknown."},
+    {"id": "v2_reviewed", "status": "unsubmitted", "public_score": null, "label": "Reviewed workflow", "hypothesis": "Scratch tooling and runtime provenance", "outcome": "Packaging/compiler validated; no measured solve result."},
+    {"id": "pilot_A", "status": "unsubmitted", "public_score": null, "label": "Thinking off", "hypothesis": "Control arm using reviewed source", "outcome": "Matches v2_reviewed bytes; not submitted v2."},
+    {"id": "pilot_B", "status": "unsubmitted", "public_score": null, "label": "Thinking on", "hypothesis": "Change only include_thoughts", "outcome": "No GPU pilot result at the publication checkpoint."}
+  ],
+  "validation": {"private_offline_assertions": 82, "private_failures": 0, "official_compile": "Both pilot candidates passed locally", "real_pilot_runs": 0, "gpu_dispatch": "held"},
+  "limitations": ["Public score is not a private leaderboard forecast", "Synthetic tests do not establish model quality", "Subprocess evaluation differs from Docker grading", "Two tasks cannot establish a generally superior candidate", "An admission deadline is not a hard process kill"]
+}
