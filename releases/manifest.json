@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "hash_kind": "deterministic ZIP: deflate, sorted paths, 1980 timestamp, 0644",
+  "releases": [
+    {
+      "id": "v1",
+      "directory": "releases/v1",
+      "sha256": "dddbe4b08d837cbc318100d009638f107866921ea20e5b63d722ad9206aa5f46",
+      "public_score": 0.06,
+      "status": "submitted",
+      "submitted_archive_sha256": "1e265aab08f5671f7e4a4f4ce42f4a3d3c274205d84fb2b235d53fd8fd42fd1d",
+      "note": "Original v1 ZIP used non-normalized metadata. Source entry bytes verified identical; sha256 is the reproducible rebuild, submitted_archive_sha256 is the historical upload."
+    },
+    {
+      "id": "v2",
+      "directory": "releases/v2",
+      "sha256": "6918f2c4adccccd9cdcaf51f354cd04aefb7d08eebef5f04d6c1ccb148cd5324",
+      "public_score": 0.06,
+      "status": "submitted"
+    },
+    {
+      "id": "v2_reviewed",
+      "directory": "releases/v2_reviewed",
+      "sha256": "f6392b8207a91a521c2434e1b5ce9f3f8d68d881298615725230d678bf04b3e3",
+      "public_score": null,
+      "status": "unsubmitted"
+    },
+    {
+      "id": "pilot_A",
+      "directory": "releases/pilot_A",
+      "sha256": "f6392b8207a91a521c2434e1b5ce9f3f8d68d881298615725230d678bf04b3e3",
+      "public_score": null,
+      "status": "unsubmitted"
+    },
+    {
+      "id": "pilot_B",
+      "directory": "releases/pilot_B",
+      "sha256": "194b420a487c48f475267bf2a35b33a813c13bd2e2410e23d0ea405835bf913d",
+      "public_score": null,
+      "status": "unsubmitted"
+    }
+  ]
+}
