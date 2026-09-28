@@ -35,3 +35,20 @@ class ClassificationTests(unittest.TestCase):
         self.assertFalse(classify_controls(base,ref)['mechanically_eligible'])
         base,ref=self.pair();ref['pytest_exit']=1
         self.assertFalse(classify_controls(base,ref)['mechanically_eligible'])
+
+
+from scripts.evaluation_policy import allocate
+class AllocationTests(unittest.TestCase):
+    def test_quotas_and_studied_exclusion(self):
+        rows=[dict(id=f'{r}{i}',repo=r,size='small') for r in ['a','b'] for i in range(8)]
+        result=allocate(rows,{'a':3,'b':1},2,2,studied={'a0','b0'})
+        self.assertEqual(len(result['dev']),2);self.assertEqual(len(result['holdout']),2)
+        self.assertFalse(set(result['holdout']) & {'a0','b0'})
+        self.assertFalse(set(result['dev']) & set(result['holdout']))
+        self.assertEqual(result['quota_shortfall'],{'a':0,'b':0})
+        self.assertEqual(result['unused_valid'],12)
+    def test_shortage_is_not_padded(self):
+        rows=[dict(id='a',repo='r',size='small')]
+        result=allocate(rows,{'r':2},1,1,studied={'a'})
+        self.assertEqual(result['holdout'],[])
+        self.assertEqual(result['capacity_shortfall'],{'dev':0,'holdout':1})

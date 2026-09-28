@@ -43,3 +43,22 @@ def classify_controls(baseline, reference):
     if not targets: reasons.append('no failure-to-pass nodes')
     return {'mechanically_eligible':not reasons,'reasons':reasons,'target_nodes':targets,
             'failure_relevance':'review_required'}
+
+
+def allocate(rows, quotas, dev_capacity, holdout_capacity, studied=()):
+    """Cap combined repository counts; prioritize holdout eligibility, report shortages."""
+    if min(dev_capacity,holdout_capacity,*quotas.values(),0)<0: raise ValueError('negative capacity')
+    ordered=screening_order(rows,len(rows)); studied=set(studied)
+    remaining=dict(quotas); selected=set(); splits={}
+    for split,capacity in [('holdout',holdout_capacity),('dev',dev_capacity)]:
+        chosen=[]
+        for row in ordered:
+            if len(chosen)>=capacity: break
+            if row['id'] in selected or remaining.get(row['repo'],0)<=0: continue
+            if split=='holdout' and row['id'] in studied: continue
+            chosen.append(row['id']);selected.add(row['id']);remaining[row['repo']]-=1
+        splits[split]=chosen
+    return {**splits,'quota_shortfall':remaining,
+            'capacity_shortfall':{'dev':dev_capacity-len(splits['dev']),
+                                 'holdout':holdout_capacity-len(splits['holdout'])},
+            'unused_valid':len(rows)-len(selected)}
