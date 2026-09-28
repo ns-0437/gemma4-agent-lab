@@ -13,3 +13,25 @@ class ScreeningTests(unittest.TestCase):
         self.assertEqual(screening_order([row],0),[])
         with self.assertRaises(ValueError): screening_order([row,row],4)
         with self.assertRaises(ValueError): screening_order([], -1)
+
+
+from scripts.evaluation_policy import classify_controls
+class ClassificationTests(unittest.TestCase):
+    def pair(self):
+        base=dict(import_in_checkout=True,patch_rc=0,test_patch_rc=0,pytest_exit=1,
+                  nodes={f't{i}':'failed' for i in range(37)})
+        ref={**base,'pytest_exit':0,'nodes':{n:'passed' for n in base['nodes']}}
+        return base,ref
+    def test_all_targets_and_review_gate(self):
+        result=classify_controls(*self.pair())
+        self.assertTrue(result['mechanically_eligible'])
+        self.assertEqual(len(result['target_nodes']),37)
+        self.assertEqual(result['failure_relevance'],'review_required')
+    def test_errors_exit_and_missing_patch(self):
+        for field,value in [('pytest_exit',2),('patch_rc',None),('exception','setup failed')]:
+            base,ref=self.pair();base[field]=value
+            self.assertFalse(classify_controls(base,ref)['mechanically_eligible'])
+        base,ref=self.pair();base['nodes']['fixture']='errored'
+        self.assertFalse(classify_controls(base,ref)['mechanically_eligible'])
+        base,ref=self.pair();ref['pytest_exit']=1
+        self.assertFalse(classify_controls(base,ref)['mechanically_eligible'])
