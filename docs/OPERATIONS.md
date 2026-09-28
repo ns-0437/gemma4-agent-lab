@@ -27,6 +27,28 @@ Push once. On ambiguous response inspect status before retrying. Stop further di
 provenance or server failure. Preserve ordinary wrong answers as results. Do not expand the run or
 restart polling without authorization. Download artifacts locally; repair reports offline first.
 
+## Dispatch record: pilot v1 (2026-09-27)
+
+The four-run A/B pilot was dispatched after explicit owner authorization. A forwarded template
+containing authorization text was not treated as authorization; the hold was lifted in conversation.
+
+| item | value |
+|---|---|
+| kernel | `gemma4-swe-agent-pilot` version 1, private, pushed once |
+| dispatch-enabled notebook | `1321f80539a68bb8e7c35629a8b0960d26045fb7acd77d0959b8fe161019c322` |
+| dispatch-disabled notebook (pre-flip) | `30b500e01d762bee70ec406f47bbe7d690a8e5cdbe40a3aa430cf0b0d3147d24` |
+| candidate A | `f6392b8207a91a521c2434e1b5ce9f3f8d68d881298615725230d678bf04b3e3` |
+| candidate B | `194b420a487c48f475267bf2a35b33a813c13bd2e2410e23d0ea405835bf913d` |
+
+Enabling changed exactly one line in one cell (`DISPATCH_CONFIRM False -> True`); a whole-notebook
+diff confirmed nothing else moved, and the saved shipping flag was read directly rather than inferred
+from the test suite, which overrides that flag in its simulated namespaces. Candidate hashes were
+recomputed after regeneration and were unchanged.
+
+The notebook sat queued for roughly nineteen hours before starting. No account-level blocker was
+found: no warning on the version page, no competing session, and ample accelerator quota. Other
+entrants reported multi-hour four-L4 queues in the same window. The cause remains unconfirmed.
+
 ## Competition submission
 
 Freeze a newly named candidate, validate and officially compile it, then generate from that frozen
