@@ -21,13 +21,13 @@
 
 An independent research project for the [Gemma 4 Developer Agent competition](https://www.kaggle.com/competitions/gemma-4-developer-agent): frozen agent prompts, reproducible submission builds, guarded evaluation, and an honest record of what worked—and what did not.
 
-**The measured result is 0.06 for both submitted versions.** The reviewed candidates have not been submitted or evaluated on a real-model pilot at this publication checkpoint. Packaging correctness, synthetic test counts and leaderboard performance are different kinds of evidence. We keep them separate.
+**The measured result is 0.06 for both submitted versions.** The reviewed candidates remain unsubmitted. The first real-model pilot has now run on four L4 devices: of four planned runs, two executed and **none produced a graded result**, so it ranks no candidate. It did expose one decisive failure — the agent edited the verification tests, and grading never ran. Packaging correctness, synthetic test counts and leaderboard performance are different kinds of evidence. We keep them separate. [Pilot v1 →](docs/PILOT_V1.md)
 
 > **Code-only public repository.** No 22 GB competition bundle, task answers, model weights, credentials or raw traces. The public tests run on invented fixtures. [Read the data policy →](docs/DATA_POLICY.md)
 
 ## Results
 
-Snapshot: **27 September 2026**. Scores are from the owner's Kaggle submissions screenshot; hidden per-task outcomes are unavailable.
+Snapshot: **28 September 2026**. Scores are from the owner's Kaggle submissions screenshot; hidden per-task outcomes are unavailable.
 
 | Artifact | What changed | Public score | Evidence |
 |:--|:--|:--:|:--|
@@ -141,8 +141,9 @@ The local suite grew from 22 checks that missed important paths to 82 checks. Th
 - [x] Preserve scored release identities and separate unsubmitted candidates.
 - [x] Repair lifecycle, provenance, report-schema and dispatch tests.
 - [x] Publish a data-free, CPU-testable research repository.
-- [ ] Run the explicitly authorized four-run A/B pilot.
-- [ ] Read every trace; select one demonstrated failure mode.
+- [x] Run the explicitly authorized four-run A/B pilot (2 of 4 executed; 0 graded).
+- [x] Read every trace; select one demonstrated failure mode (test-file tampering).
+- [ ] Re-run the pilot with the test-revert guard and a workable output allowance.
 - [ ] Compare on broader development tasks, then untouched holdout tasks.
 
 [Roadmap](docs/ROADMAP.md) · [Reproducibility](docs/REPRODUCIBILITY.md) · [Operations](docs/OPERATIONS.md) · [Contributing](CONTRIBUTING.md)
