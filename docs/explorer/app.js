@@ -3,7 +3,7 @@ const list = document.querySelector('#release-list');
 const detail = document.querySelector('#detail');
 const status = document.querySelector('#load-status');
 const theme = document.querySelector('#theme');
-let releases = [], manifest = new Map(), selected = 'v2', filter = 'all';
+let releases = [], manifest = new Map(), selected = 'v2', filter = 'all', checkpoint = 'unavailable';
 theme.addEventListener('click', () => {
   const dark = document.body.classList.toggle('dark');
   theme.setAttribute('aria-pressed', String(dark));
@@ -27,12 +27,12 @@ function render() {
     button.addEventListener('click', () => { selected = release.id; render(); });
     list.append(button);
   }
-  status.textContent = `${visible.length} releases · selected: ${selected || 'none'} · checkpoint 2026-09-27`;
+  status.textContent = `${visible.length} releases Â· selected: ${selected || 'none'} Â· checkpoint ${checkpoint}`;
   const r = visible.find(x => x.id === selected);
   detail.replaceChildren();
   if (!r) { detail.append(el('p','No releases match this filter.')); return; }
   const record = manifest.get(r.id);
-  detail.append(el('span', r.status === 'submitted' ? 'SUBMITTED / MEASURED' : 'CANDIDATE / UNSCORED', `badge${r.status === 'submitted' ? '' : ' pending'}`), el('h3',r.id), el('p',r.label), el('h4','HYPOTHESIS'), el('p',r.hypothesis), el('h4','OBSERVED RESULT'), el('p',r.outcome));
+  detail.append(el('span', EvidenceView.badge(r), `badge${r.status === 'submitted' ? '' : ' pending'}`), el('h3',r.id), el('p',r.label), el('h4','HYPOTHESIS'), el('p',r.hypothesis), el('h4','OBSERVED RESULT'), el('p',r.outcome));
   if (record) {
     detail.append(el('h4','REPRODUCIBLE ARCHIVE SHA-256'), el('code',record.sha256,'hash'));
     const copy = el('button','Copy hash','copy'); copy.type='button';
@@ -44,7 +44,7 @@ function render() {
       detail.append(el('h4','HISTORICAL UPLOAD SHA-256'),el('code',record.submitted_archive_sha256,'hash'),el('p',record.note,'disclaimer'));
     }
   }
-  detail.append(el('p', r.status === 'submitted' ? 'Public score evidence: owner-provided Kaggle screenshot. No hidden per-task results are available.' : 'No public score or real pilot outcome is assigned to this candidate. Compilation is not task-solving evidence.', 'disclaimer'));
+  detail.append(el('p', r.public_score != null ? 'Public score evidence: owner-provided Kaggle screenshot. No hidden per-task results are available.' : 'No public score is recorded. Pilot and replay observations are described above; neither is a leaderboard score.', 'disclaimer'));
 }
 document.querySelector('#filters').addEventListener('change',event => { filter=event.target.value; render(); });
 Promise.all([fetch('../results.json'),fetch('../../releases/manifest.json')])
@@ -52,5 +52,13 @@ Promise.all([fetch('../results.json'),fetch('../../releases/manifest.json')])
     if (responses.some(r => !r.ok)) throw new Error('Manifest could not be loaded');
     return Promise.all(responses.map(r => r.json()));
   }).then(([results,artifacts]) => {
+    checkpoint=EvidenceView.checkpoint(results);
+    document.querySelector('#pilot-summary').textContent=EvidenceView.pilot(results);
+    document.querySelector('#submission-summary').textContent=EvidenceView.submission(results);
+    document.querySelector('#checkpoint').textContent=checkpoint;
+    checkpoint=EvidenceView.checkpoint(results);
+    document.querySelector('#pilot-summary').textContent=EvidenceView.pilot(results);
+    document.querySelector('#submission-summary').textContent=EvidenceView.submission(results);
+    document.querySelector('#checkpoint').textContent=checkpoint;
     releases=results.releases; manifest=new Map(artifacts.releases.map(r => [r.id,r])); render();
   }).catch(() => { status.textContent='Could not load evidence. Serve the repository over HTTP or read docs/results.json in GitHub.'; });
