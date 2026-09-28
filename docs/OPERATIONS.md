@@ -49,6 +49,21 @@ The notebook sat queued for roughly nineteen hours before starting. No account-l
 found: no warning on the version page, no competing session, and ample accelerator quota. Other
 entrants reported multi-hour four-L4 queues in the same window. The cause remains unconfirmed.
 
+## When the guard stopped the run
+
+After run 2 the log recorded `Stopping further dispatch after infrastructure/provenance failure`
+and rows 3 and 4 never started. The guard fired because the failed run produced only one setup
+observation: grading never began, so the grading-phase import probe never ran and
+`both_setup_imports_verified` stayed false.
+
+The guard behaved as designed and preserved every artifact already written. Whether it should have
+fired is a separate question. A context-window error is a candidate configuration failure, not a
+broken sandbox, and treating the two alike cost both remaining runs on an unaffected task.
+
+The distinction to encode next time is between provenance or setup failures, which invalidate later
+runs, and per-candidate request failures, which do not. Widening the guard is only safe once that
+separation exists; until then stopping early remains the conservative default.
+
 ## Competition submission
 
 Freeze a newly named candidate, validate and officially compile it, then generate from that frozen
