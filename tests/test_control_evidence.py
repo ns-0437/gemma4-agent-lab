@@ -16,3 +16,27 @@ class JUnitTests(unittest.TestCase):
         with self.assertRaises(ValueError): parse_junit('<testsuite><testcase/></testsuite>')
         with self.assertRaises(ET.ParseError): parse_junit('not xml')
         self.assertEqual(parse_junit('<testsuite/>'),{})
+
+
+from pathlib import Path
+import tempfile, json, hashlib
+from scripts.control_evidence import write_arm
+class PersistenceTests(unittest.TestCase):
+    def test_complete_bytes_and_no_overwrite(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'arm'
+            record=write_arm(path,{'reached_pytest':True,'pytest_exit':0},stdout='🚀',junit='<testsuite/>')
+            self.assertEqual(json.loads((path/'arm.json').read_text(encoding='utf-8')),record)
+            for name,digest in record['artifact_sha256'].items():
+                self.assertEqual(hashlib.sha256((path/name).read_bytes()).hexdigest(),digest)
+            with self.assertRaises(FileExistsError):write_arm(path,{'reached_pytest':False})
+    def test_setup_failure_and_missing_xml_differ(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'setup'
+            write_arm(path,{'reached_pytest':False,'exception':'setup failed'},traceback_text='trace')
+            self.assertTrue((path/'NO_PYTEST_RUN.txt').exists())
+            self.assertFalse((path/'junit.xml').exists())
+            second=Path(tmp)/'interrupted'
+            write_arm(second,{'reached_pytest':True,'pytest_exit':-1})
+            self.assertTrue((second/'MISSING_JUNIT.txt').exists())
+            with self.assertRaises(ValueError):write_arm(Path(tmp)/'bad',{'reached_pytest':False},junit='fake')
