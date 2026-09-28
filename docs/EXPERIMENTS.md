@@ -26,22 +26,12 @@ set across repositories, preserve untouched holdout tasks, and report matched wi
 runtime. Do not silently drop difficult valid tasks. Repeat unstable outcomes under a fixed rule.
 Promote a candidate only with evidence appropriate to the claim. Never promise leaderboard rank.
 
-## Pilot v1 result: the thinking arm never reached a patch
+## Pilot v1: repetition before context overflow
 
-Candidate B failed with a context-window error rather than a poor answer:
+B had already edited source. After test edits caused collection errors, it read the same range
+25 consecutive times. The final request required at least 24,577 input plus 8,192 reserved output
+tokens, exceeding 32,768. Cumulative prompt usage of 646,691 is not a single context size.
 
-```
-maximum context length is 32768 tokens. However, you requested 8192 output tokens
-and your prompt contains at least 24577 input tokens, for a total of at least 32769
-```
-
-24,577 + 8,192 = 32,769, one token beyond the 32,768 limit. B had consumed 646,691 prompt tokens
-across the run, 3.6 times candidate A on the same task, and produced no patch at all.
-
-This is a configuration incompatibility between enabled thinking and `max_output_tokens: 8192`,
-not evidence about the value of thinking. A run censored before it can edit says nothing about
-solution quality. Raising the turn cap would not help either, because the failure is per-request.
-
-The output allowance must therefore be tested as its own experiment, with `max_output_tokens`
-reduced so that prompt plus output fits inside the window, before any thinking comparison is
-attempted again. Do not read row 2 as a verdict on candidate B.
+This does not demonstrate an inherent incompatibility between thinking and the output cap.
+Lowering output allowance alone would not prevent a tool loop. Evaluate loop behavior and context
+headroom explicitly, and isolate reasoning-setting comparisons from other candidate changes.

@@ -33,7 +33,7 @@
       "public_score": null,
       "label": "Thinking off",
       "hypothesis": "Control arm using reviewed source",
-      "outcome": "Matches v2_reviewed bytes; not submitted v2. Pilot v1: ran on requests_7309, produced a source edit but also edited the verification test file, so grading never ran. Not graded; rich_3471 arm never started."
+      "outcome": "Original pilot: verification patch failed to apply; no grade. Later CPU replay: both saved patch and source-only patch passed 220 tests. The original failure did not reproduce and remains unexplained."
     },
     {
       "id": "pilot_B",
@@ -41,7 +41,7 @@
       "public_score": null,
       "label": "Thinking on",
       "hypothesis": "Change only include_thoughts",
-      "outcome": "Changes only include_thoughts. Pilot v1: ran on requests_7309 and ended with a context-window error (24577 input + 8192 output > 32768) before producing any patch. Not graded; rich_3471 arm never started."
+      "outcome": "Edited source, then damaged tests and repeated one read 25 times. Context overflow ended the run before patch extraction or grading. This does not establish an inherent thinking/output incompatibility."
     }
   ],
   "validation": {
@@ -60,9 +60,20 @@
     "Two tasks cannot establish a generally superior candidate",
     "An admission deadline is not a hard process kill",
     "Pilot v1 graded zero of four planned runs, so it ranks no candidate",
-    "A context-window failure censors a run before it can edit; it is not a quality signal",
-    "Editing verification tests destroys the measurement, not merely the score",
     "Accelerator metadata states the request; only runtime device counts confirm allocation",
-    "A single quota reading shows headroom, not what a given run was charged"
+    "A single quota reading shows headroom, not what a given run was charged",
+    "A saved patch passing replay tests is not a new agent solve measurement",
+    "Cumulative prompt usage is not the size of a single context window"
+  ],
+  "submission_updates": [
+    {
+      "id": "v3",
+      "reference": "56636116",
+      "status_at_report": "PENDING",
+      "reported_on": "2026-09-28",
+      "public_score": null,
+      "sha256": "b8da59c1c3a0671bb9b11b2fe4238a252ff792a63abf7ea4b5d555ceab57b24b",
+      "source": "Owner-provided submission report; current server status not polled"
+    }
   ]
 }
