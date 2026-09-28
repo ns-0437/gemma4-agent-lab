@@ -56,9 +56,5 @@ Promise.all([fetch('../results.json'),fetch('../../releases/manifest.json')])
     document.querySelector('#pilot-summary').textContent=EvidenceView.pilot(results);
     document.querySelector('#submission-summary').textContent=EvidenceView.submission(results);
     document.querySelector('#checkpoint').textContent=checkpoint;
-    checkpoint=EvidenceView.checkpoint(results);
-    document.querySelector('#pilot-summary').textContent=EvidenceView.pilot(results);
-    document.querySelector('#submission-summary').textContent=EvidenceView.submission(results);
-    document.querySelector('#checkpoint').textContent=checkpoint;
     releases=results.releases; manifest=new Map(artifacts.releases.map(r => [r.id,r])); render();
   }).catch(() => { status.textContent='Could not load evidence. Serve the repository over HTTP or read docs/results.json in GitHub.'; });

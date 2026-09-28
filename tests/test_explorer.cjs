@@ -1,0 +1,11 @@
+const assert = require('node:assert/strict');
+const view = require('../docs/explorer/evidence.js');
+const results = require('../docs/results.json');
+assert.equal(view.badge({status:'submitted',public_score:null}),'SUBMITTED / SCORE UNAVAILABLE');
+assert.equal(view.badge({status:'submitted',public_score:0}),'SUBMITTED / SCORED');
+assert.equal(view.badge({status:'unsubmitted',public_score:null}),'CANDIDATE / UNSCORED');
+assert.equal(view.checkpoint(results),results.as_of);
+assert.equal(view.pilot(results),'2 executed / 4 planned / 0 graded');
+assert.match(view.submission(results),/not live status/);
+assert.equal(view.submission({}),'No newer submission recorded.');
+console.log('Explorer presentation regressions passed. No network or browser required.');
