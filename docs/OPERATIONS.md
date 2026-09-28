@@ -49,6 +49,23 @@ The notebook sat queued for roughly nineteen hours before starting. No account-l
 found: no warning on the version page, no competing session, and ample accelerator quota. Other
 entrants reported multi-hour four-L4 queues in the same window. The cause remains unconfirmed.
 
+## Two claims corrected after review
+
+**Accelerator metadata is a request, not an allocation.** The notebook version page showing
+`GPU L4 x4` states what was asked for. Only runtime values establish what was granted: device count,
+device names, and the tensor-parallel size the server actually starts with. The pilot's own record
+shows four devices and `tp=4`; earlier wording that treated the settings label as proof was wrong.
+
+**A single quota reading cannot establish what a run was charged.** Observing 39 minutes used out of
+30 hours shows headroom, nothing more. Attributing consumption to one run needs a before-and-after
+delta, and no pre-dispatch reading was taken, so the pilot's charge is unavailable. Take the reading
+before dispatch in future runs.
+
+An earlier note also gave a "conservative maximum of about 1.5 hours" for the four runs. That figure
+was unsupported and is withdrawn. The session setting admits new runs; it does not cap wall-clock
+time, terminate a run in progress, or end the Kaggle session, and CPU setup inside a GPU notebook
+consumes quota as well.
+
 ## When the guard stopped the run
 
 After run 2 the log recorded `Stopping further dispatch after infrastructure/provenance failure`
