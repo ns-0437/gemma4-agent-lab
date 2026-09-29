@@ -12,3 +12,5 @@ effect of a documentation or packaging change. Keep the launch default disabled.
 
 See docs/DATA_POLICY.md before staging files. This repository was imported in meaningful
 present-day commits, with no invented historical dates or claims of human review.
+
+For explicit missing-run reporting, see [Comparison reports](docs/COMPARISON_REPORTS.md).
