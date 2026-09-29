@@ -4,8 +4,14 @@ import xml.etree.ElementTree as ET
 def parse_junit(text):
     """Fail closed on malformed XML or ambiguous identities; preserve failure detail."""
     root=ET.fromstring(text)
+    # Some JUnit producers attach a namespace to every element.
+    # Normalize tags before looking for tests, failures or setup errors.
+    for element in root.iter():
+        element.tag = element.tag.rsplit('}', 1)[-1]
     nodes={}
     for case in root.iter('testcase'):
+        if not (case.get('name') or '').strip():
+            raise ValueError('missing JUnit test name')
         identity=(case.get('classname','')+'::'+case.get('name','')).strip(':')
         if not identity or identity in nodes:
             raise ValueError('missing or duplicate JUnit test identity')
