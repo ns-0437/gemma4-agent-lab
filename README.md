@@ -6,7 +6,7 @@
   <a href="https://github.com/ns-0437/gemma4-agent-lab/actions/workflows/ci.yml"><img alt="CPU validation" src="https://github.com/ns-0437/gemma4-agent-lab/actions/workflows/ci.yml/badge.svg" /></a>
   <img alt="Python 3.12+" src="https://img.shields.io/badge/Python-3.12%2B-315ea8?style=flat-square" />
   <img alt="Public score 0.06, measured" src="https://img.shields.io/badge/Public_score-0.06_measured-087f72?style=flat-square" />
-  <img alt="Pilot status unmeasured" src="https://img.shields.io/badge/Pilot-unmeasured-c77618?style=flat-square" />
+  <img alt="Pilot: zero graded runs" src="https://img.shields.io/badge/Pilot-0_graded-c77618?style=flat-square" />
 </p>
 
 <p align="center">
@@ -21,7 +21,10 @@
 
 An independent research project for the [Gemma 4 Developer Agent competition](https://www.kaggle.com/competitions/gemma-4-developer-agent): frozen agent prompts, reproducible submission builds, guarded evaluation, and an honest record of what worked—and what did not.
 
-**The measured result is 0.06 for both submitted versions.** The reviewed candidates remain unsubmitted. The first real-model pilot has now run on four L4 devices: of four planned runs, two executed and **none produced a graded result**, so it ranks no candidate. It did expose one decisive failure — the agent edited the verification tests, and grading never ran. Packaging correctness, synthetic test counts and leaderboard performance are different kinds of evidence. We keep them separate. [Pilot v1 →](docs/PILOT_V1.md)
+**v1 and v2 each scored 0.06.** v3 was reported submitted on 28 September (reference
+56636116); no v3 score is recorded at this checkpoint. The first pilot executed two of four
+planned runs, with zero graded results. A later CPU replay passed candidate A's saved patch,
+but did not reproduce or explain the pilot's grading failure. [Pilot evidence →](docs/PILOT_V1.md)
 
 > **Code-only public repository.** No 22 GB competition bundle, task answers, model weights, credentials or raw traces. The public tests run on invented fixtures. [Read the data policy →](docs/DATA_POLICY.md)
 
@@ -143,7 +146,7 @@ The local suite grew from 22 checks that missed important paths to 82 checks. Th
 - [x] Publish a data-free, CPU-testable research repository.
 - [x] Run the explicitly authorized four-run A/B pilot (2 of 4 executed; 0 graded).
 - [x] Read every trace; select one demonstrated failure mode (test-file tampering).
-- [ ] Re-run the pilot with the test-revert guard and a workable output allowance.
+- [ ] Validate a representative development/held-out set before another agent comparison.
 - [ ] Compare on broader development tasks, then untouched holdout tasks.
 
 [Roadmap](docs/ROADMAP.md) · [Reproducibility](docs/REPRODUCIBILITY.md) · [Operations](docs/OPERATIONS.md) · [Contributing](CONTRIBUTING.md)

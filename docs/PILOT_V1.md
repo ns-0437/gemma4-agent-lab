@@ -46,7 +46,8 @@ The agent produced a genuine source edit and also edited the verification test f
 Agent loop 225.5 s, grading never started, 44 tool calls, 5 edit calls, 1 tool error, 646,691 prompt
 tokens (3.6x row 1) and 7,085 completion tokens. Finish reasons unavailable.
 
-The run ended with a context-window error before any patch existed. See [EXPERIMENTS](EXPERIMENTS.md).
+The agent edited source before damaging the test file and making 25 identical reads.
+The run ended with a context-window error before a patch was extracted. See [EXPERIMENTS](EXPERIMENTS.md).
 
 ## Contamination audit
 
@@ -57,6 +58,14 @@ a security boundary.
 
 ## What this establishes
 
-The pipeline runs end to end on real four-L4 hardware with the real quantized model, the import
+Model serving and agent execution run on real four-L4 hardware with the real quantized model, the import
 repair survives real agent and grading sandboxes, and phase timings, traces and artifacts are
 usable. It establishes nothing about relative candidate quality: zero of four runs were graded.
+
+## CPU replay correction (28 September)
+
+The unpatched control failed the five target cases and the reference passed all 220 tests.
+Both A's original saved patch and its source-only variant passed all 220 tests. The original
+patch's four deleted test expectations were reset successfully before verification patching.
+Thus the claim that A's test edits caused the pilot grading failure is withdrawn. That failure
+did not reproduce; its mechanism remains an open issue. Replay is not a fresh agent run.

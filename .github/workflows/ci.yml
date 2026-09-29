@@ -28,3 +28,13 @@ jobs:
           name: synthetic-logs-${{ matrix.os }}
           path: build/*.log
           retention-days: 7
+
+  explorer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check docs/explorer/app.js
+      - run: node tests/test_explorer.cjs
