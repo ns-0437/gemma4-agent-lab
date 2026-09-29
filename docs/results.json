@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "as_of": "2026-09-28",
+  "as_of": "2026-09-30",
   "evidence_note": "Scores were observed in the owner's Kaggle submissions screenshot. No hidden per-task outcomes are available. Local assertions are not solve rates.",
   "releases": [
     {
@@ -69,11 +69,21 @@
     {
       "id": "v3",
       "reference": "56636116",
-      "status_at_report": "PENDING",
-      "reported_on": "2026-09-28",
-      "public_score": null,
+      "status_at_report": "SUCCEEDED",
+      "reported_on": "2026-09-30",
+      "public_score": 0.06,
       "sha256": "b8da59c1c3a0671bb9b11b2fe4238a252ff792a63abf7ea4b5d555ceab57b24b",
-      "source": "Owner-provided submission report; current server status not polled"
+      "source": "Owner-provided submissions screenshot; no hidden per-task outcomes available"
     }
-  ]
+  ],
+  "comparison_v2": {
+    "planned": 8,
+    "executed": 2,
+    "graded": 0,
+    "controls_accepted": 8,
+    "winner": null,
+    "report": "COMPARISON_V2.md",
+    "candidate_A": "submitted v3",
+    "candidate_B": "shorter prompt; thinking off"
+  }
 }

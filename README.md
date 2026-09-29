@@ -21,23 +21,27 @@
 
 An independent research project for the [Gemma 4 Developer Agent competition](https://www.kaggle.com/competitions/gemma-4-developer-agent): frozen agent prompts, reproducible submission builds, guarded evaluation, and an honest record of what worked—and what did not.
 
-**v1 and v2 each scored 0.06.** v3 was reported submitted on 28 September (reference
-56636116); no v3 score is recorded at this checkpoint. The first pilot executed two of four
-planned runs, with zero graded results. A later CPU replay passed candidate A's saved patch,
-but did not reproduce or explain the pilot's grading failure. [Pilot evidence →](docs/PILOT_V1.md)
+**v1, v2 and v3 each scored 0.06**, according to the owner's submissions screenshot.
+The latest comparison passed all eight control arms, but only two of eight agent runs executed
+and neither reached grading. Repetition and rejected tool calls remain unresolved; no candidate
+winner is established. [Latest comparison →](docs/COMPARISON_V2.md)
 
 > **Code-only public repository.** No 22 GB competition bundle, task answers, model weights, credentials or raw traces. The public tests run on invented fixtures. [Read the data policy →](docs/DATA_POLICY.md)
 
 ## Results
 
-Snapshot: **28 September 2026**. Scores are from the owner's Kaggle submissions screenshot; hidden per-task outcomes are unavailable.
+Snapshot: **30 September 2026**. Scores are from the owner's Kaggle submissions screenshot; hidden per-task outcomes are unavailable.
 
 | Artifact | What changed | Public score | Evidence |
 |:--|:--|:--:|:--|
 | **v1** | Coder + analyzer, structured repair workflow | **0.06** | Submitted |
 | **v2** | Direct search, optional analyzer, bounded investigation | **0.06** | Submitted |
+| **v3** | Prompt reliability changes | **0.06** | Submitted; owner screenshot |
 | **v2_reviewed / A** | Scratch tooling and import-provenance improvements | — | Unsubmitted; compiled locally |
 | **B** | A with thinking enabled for both agents | — | Unsubmitted; compiled locally |
+
+The A/B labels above belong to the **original pilot**. The later prompt comparison uses
+**A = submitted v3** and **B = a shorter prompt**, both with thinking off. They are separate experiments.
 
 Equal aggregate scores do not prove the same tasks were solved. A two-task pilot cannot establish a general winner. The project makes no claim of a guaranteed rank or prize.
 

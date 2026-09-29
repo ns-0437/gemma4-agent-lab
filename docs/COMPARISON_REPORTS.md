@@ -18,3 +18,21 @@ Keep raw evidence separately. This small utility is a presentation contract, not
 engine: it does not inspect traces, prove provenance, identify failure causes, compute a solve
 rate, or establish why a run is missing. It is not integrated into the private Kaggle notebook.
 No competition data, reference patches or private traces belong in this repository.
+
+## Grading eligibility and integrated offline review
+
+Rows now include `comparable` and `comparison_reason`. Eligibility requires explicit
+`grading_ran`, `cleanup_ok`, `provenance_ok`, an integer `test_exit_code` of 0 or 1, and a
+consistent boolean `resolved`. A raw false flag on an ungraded run is preserved but excluded.
+
+`python scripts/review_run_records.py input.json` additionally classifies `harness_error` and
+`run_error`, and summarizes an optional inline `trace` object. It accepts the same plan/runs
+envelope. Explicit `environment_error` overrides candidate termination evidence. Unknown errors
+stop the suggested dispatch decision without being labelled as proven environment failures.
+It only prints a report: it never starts or stops runs. The tests execute the CLI and verify that
+input bytes remain unchanged.
+
+`python scripts/verify_evidence.py /path/to/arm` checks the `artifact_sha256` entries created by
+`control_evidence.write_arm`. Hash integrity is separate from grading validity. Missing files,
+changed bytes and unsafe paths are rejected. These public utilities are not automatically wired
+into the private competition notebook.
