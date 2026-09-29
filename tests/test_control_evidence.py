@@ -3,6 +3,16 @@ import xml.etree.ElementTree as ET
 from scripts.control_evidence import parse_junit
 
 class JUnitTests(unittest.TestCase):
+    def test_namespaced_reports_preserve_setup_errors(self):
+        text='<testsuites xmlns="urn:example:junit"><testsuite><testcase classname="demo" name="target"><error message="fixture">setup failed</error></testcase></testsuite></testsuites>'
+        nodes=parse_junit(text)
+        self.assertEqual(nodes['demo::target']['outcome'],'errored')
+        self.assertEqual(nodes['demo::target']['details'][0]['text'],'setup failed')
+
+    def test_classname_alone_is_not_a_test_identity(self):
+        for xml in ('<testcase classname="demo"/>','<testcase classname="demo" name=" "/>'):
+            with self.assertRaises(ValueError): parse_junit(xml)
+
     def test_outcomes_and_unicode(self):
         text='<testsuites><testsuite><testcase classname="c" name="a[1]"><failure message="bad">rocket 🚀</failure></testcase><testcase classname="c" name="b"><error>fixture</error></testcase><testcase name="skip"><skipped/></testcase><testcase name="ok"/></testsuite></testsuites>'
         nodes=parse_junit(text)
