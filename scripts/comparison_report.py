@@ -4,6 +4,28 @@ import json
 from pathlib import Path
 
 
+def comparison_eligible(record):
+    """A recorded boolean alone is insufficient evidence of a graded outcome."""
+    if record.get('attempted') is False:
+        return False, 'not attempted'
+    code = record.get('test_exit_code')
+    if type(code) is not int or code not in (0, 1):
+        return False, 'no pass/fail grading verdict'
+    if record.get('grading_ran') is not True:
+        return False, 'grading unconfirmed'
+    if record.get('cleanup_ok') is not True:
+        return False, 'cleanup unconfirmed'
+    if record.get('provenance_ok') is not True:
+        return False, 'checkout provenance unconfirmed'
+    if record.get('failure_class') not in (None, '', 'candidate', 'completed'):
+        return False, 'environment or unknown failure'
+    if type(record.get('resolved')) is not bool:
+        return False, 'resolution unconfirmed'
+    if record['resolved'] != (code == 0):
+        return False, 'resolution contradicts grading exit'
+    return True, 'observed graded outcome'
+
+
 def key(record):
     pair = tuple(record.get(field) for field in ("task", "candidate"))
     if not all(isinstance(value, str) and value.strip() for value in pair):
@@ -29,14 +51,17 @@ def build_report(plan, runs, stop_reason=None):
         if record is None:
             rows.append(dict(task=task, candidate=candidate, attempted=False,
                              outcome=None, resolved=None,
+                             comparable=False, comparison_reason='not attempted',
                              stop_reason=stop_reason or "no run record available"))
         else:
             # Missing resolution stays unknown; false is a measured failure, not absence.
             resolved = record.get("resolved")
             if resolved is not None and type(resolved) is not bool:
                 raise ValueError("resolved must be boolean or null")
+            comparable, reason = comparison_eligible(record)
             rows.append(dict(task=task, candidate=candidate, attempted=True,
                              outcome=record.get("outcome"), resolved=resolved,
+                             comparable=comparable, comparison_reason=reason,
                              stop_reason=None))
     return rows
 
