@@ -22,9 +22,10 @@
 An independent research project for the [Gemma 4 Developer Agent competition](https://www.kaggle.com/competitions/gemma-4-developer-agent): frozen agent prompts, reproducible submission builds, guarded evaluation, and an honest record of what worked—and what did not.
 
 **v1, v2 and v3 each scored 0.06**, according to the owner's submissions screenshot.
-The latest comparison passed all eight control arms, but only two of eight agent runs executed
-and neither reached grading. Repetition and rejected tool calls remain unresolved; no candidate
-winner is established. [Latest comparison →](docs/COMPARISON_V2.md)
+The subsequent single-task recovery experiment produced no patch and never reached grading:
+60 tool calls, no rejected calls, and a repeated command loop. A concise-prompt A/S comparison
+was launched on September 30; its outcome has not been reviewed in this checkpoint.
+No candidate winner is established. [Current experiment checkpoint →](docs/STAGE1_AND_AS.md)
 
 > **Code-only public repository.** No 22 GB competition bundle, task answers, model weights, credentials or raw traces. The public tests run on invented fixtures. [Read the data policy →](docs/DATA_POLICY.md)
 

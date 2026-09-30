@@ -9,6 +9,25 @@ from scripts.review_run_records import review
 
 
 class ReviewIntegrationTests(unittest.TestCase):
+    def test_integrated_holdout_check_blocks_before_review(self):
+        p = self.payload()
+        p['freeze'] = {'protected_holdout': ['invented_0']}
+        with self.assertRaisesRegex(ValueError, 'hold-out overlap'):
+            review(p)
+
+    def test_optional_evidence_and_pair_summary_use_same_eligibility(self):
+        p = self.payload()
+        p['pair_candidates'] = ['A', 'B']
+        p['freeze'] = {'protected_holdout': ['reserved']}
+        p['runs'][0].update(instrument_checks={'controls': True}, grading_provenance_ok=None,
+                            patch_text='', agent_patch_size=0)
+        result = review(p)
+        self.assertTrue(result['holdout_check']['disjoint'])
+        self.assertEqual(result['rows'][0]['instrument']['state'], 'grading_path_unobserved')
+        self.assertFalse(result['rows'][0]['patch_evidence']['syntax_valid'])
+        self.assertEqual(result['paired_summary']['candidates']['A']['planned'], 4)
+        self.assertEqual(result['paired_summary']['candidates']['A']['ungraded'], 1)
+
     def payload(self):
         plan=[dict(task=f'invented_{i}',candidate=c) for i in range(4) for c in 'AB']
         run=plan[0] | dict(harness_error='Agent completed execution without calling submit_patch.',

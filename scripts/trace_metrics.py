@@ -7,11 +7,15 @@ from pathlib import PurePosixPath
 def summarize_trace(trace):
     counts = Counter()
     calls = Counter()
+    payloads = Counter()
     for step in trace.get('steps', []):
         tool_calls = step.get('tool_calls', [])
         counts['tool_calls'] += len(tool_calls)
         for call in tool_calls:
             calls[call.get('function_name', 'unknown')] += 1
+            signature = json.dumps([call.get('function_name'), call.get('arguments')],
+                                   sort_keys=True, ensure_ascii=False)
+            payloads[signature] += 1
         if not tool_calls:
             continue
         content = step.get('observation', {}).get('content')
@@ -37,6 +41,10 @@ def summarize_trace(trace):
         # An acknowledgement is still not proof of a changed source diff.
         if in_repo and response.get('status') == 'ok' and not rejected:
             counts['acknowledged_repo_edit_calls'] += 1
+    counts['submit_patch_calls'] = calls['submit_patch']
+    counts['distinct_payloads'] = len(payloads)
+    counts['repeated_payload_calls'] = sum(n - 1 for n in payloads.values())
+    counts['most_frequent_payload_calls'] = max(payloads.values(), default=0)
     return {'counts': dict(counts), 'tools': dict(calls),
             'successful_source_changes': None,
-            'limitation': 'Source changes require a diff; shell commands are not edit evidence.'}
+            'limitation': 'Repeated payloads may be justified after state changes. Source changes require a diff; shell commands alone are not edit evidence.'}

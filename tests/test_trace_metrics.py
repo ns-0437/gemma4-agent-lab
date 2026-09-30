@@ -8,6 +8,22 @@ def event(name='edit_file', path='src/demo.py', response=None):
 
 
 class TraceMetricsTests(unittest.TestCase):
+    def test_repeats_count_payloads_without_claiming_stagnation(self):
+        first = event(name='run_command', response={'status': 'ok'})
+        first['tool_calls'][0]['arguments'] = {'command': 'python demo.py', 'timeout': 3}
+        second = event(name='run_command', response={'status': 'ok'})
+        second['tool_calls'][0]['arguments'] = {'timeout': 3, 'command': 'python demo.py'}
+        result = summarize_trace({'steps': [first, second, event(name='submit_patch')]})
+        self.assertEqual(result['counts']['repeated_payload_calls'], 1)
+        self.assertEqual(result['counts']['distinct_payloads'], 2)
+        self.assertEqual(result['counts']['submit_patch_calls'], 1)
+        self.assertIn('state changes', result['limitation'])
+
+    def test_empty_trace_reports_no_submission_without_inventing_error(self):
+        result = summarize_trace({'steps': []})
+        self.assertEqual(result['counts']['submit_patch_calls'], 0)
+        self.assertEqual(result['counts']['most_frequent_payload_calls'], 0)
+
     def test_plain_error_rejections_not_successful_edits(self):
         step = event(response='{"error":"mandatory parameter old_string missing"}')
         r = summarize_trace(dict(steps=[step] * 42))
